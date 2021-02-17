@@ -1,5 +1,6 @@
 package com.aldidwiki.myquizapp.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aldidwiki.myquizapp.BR
 import com.aldidwiki.myquizapp.R
 import com.aldidwiki.myquizapp.data.source.remote.entity.TriviaCategoriesItem
+import java.util.*
 import javax.inject.Inject
 
 class CategoryAdapter @Inject constructor()
@@ -43,6 +45,11 @@ class CategoryAdapter @Inject constructor()
             bind(getItem(position))
             itemView.setOnClickListener {
                 onItemClickCallback.onItemClicked(getItem(adapterPosition))
+            }
+
+            Random().apply {
+                val color = Color.argb(255, nextInt(256), nextInt(256), nextInt(256))
+                itemView.setBackgroundColor(color)
             }
         }
     }

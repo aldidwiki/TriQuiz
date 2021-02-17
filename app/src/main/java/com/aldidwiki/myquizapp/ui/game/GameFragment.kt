@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.aldidwiki.myquizapp.R
@@ -28,6 +29,15 @@ class GameFragment : Fragment() {
         private const val FIVE_MINUTES = 300_000L
         private const val TEN_MINUTES = 600_000L
         private const val ONE_SECOND = 1000L
+    }
+
+    private var onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            binding.btnContinue.setOnClickListener {
+                binding.viewPager.setCurrentItem(position + 1, true)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +70,7 @@ class GameFragment : Fragment() {
         super.onDestroyView()
         timer?.cancel()
         fragmentActivity.supportActionBar?.show()
+        binding.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
         _binding = null
     }
 
@@ -71,7 +82,7 @@ class GameFragment : Fragment() {
     }
 
     private fun setupTimer() {
-        timer = object : CountDownTimer(TEST, ONE_SECOND) {
+        timer = object : CountDownTimer(FIVE_MINUTES, ONE_SECOND) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
                 val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
@@ -100,6 +111,7 @@ class GameFragment : Fragment() {
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = "Question ${position + 1}"
             }.attach()
+            viewPager.registerOnPageChangeCallback(onPageChangeCallback)
         }
     }
 }

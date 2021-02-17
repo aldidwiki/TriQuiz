@@ -7,4 +7,7 @@
     <color name="primaryVariantColor">#E64A19</color>
     <color name="secondaryColor">#4CAF50</color>
     <color name="secondaryVariantColor">#388E3C</color>
+
+    <color name="correctAnswerColor">#2E7D32</color>
+    <color name="wrongAnswerColor">#C62828</color>
 </resources>
