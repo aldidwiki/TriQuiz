@@ -12,14 +12,16 @@ import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.aldidwiki.myquizapp.R
+import com.aldidwiki.myquizapp.adapter.SectionsPagerAdapter
 import com.aldidwiki.myquizapp.databinding.FragmentGameBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import java.util.concurrent.TimeUnit
 
 class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
-    private var timer: CountDownTimer? = null
     private lateinit var fragmentActivity: AppCompatActivity
+    private var timer: CountDownTimer? = null
 
     companion object {
         private const val TEST = 10000L
@@ -57,15 +59,18 @@ class GameFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         timer?.cancel()
-        timer = null
-        _binding = null
         fragmentActivity.supportActionBar?.show()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentActivity.supportActionBar?.hide()
+        setupTimer()
+        setupTabLayout()
+    }
 
+    private fun setupTimer() {
         timer = object : CountDownTimer(TEST, ONE_SECOND) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
@@ -81,12 +86,20 @@ class GameFragment : Fragment() {
                     cancelOnTouchOutside(false)
                     icon(R.drawable.ic_access_alarms)
                     message(text = "You running out time, please try again later")
-                    positiveButton(text = "Continue") {
-                        findNavController().navigateUp()
-                    }
+                    positiveButton(text = "Continue") { findNavController().navigateUp() }
                     lifecycleOwner(viewLifecycleOwner)
                 }
             }
         }.start()
+    }
+
+    private fun setupTabLayout() {
+        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+        with(binding) {
+            viewPager.adapter = sectionsPagerAdapter
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = "Question ${position + 1}"
+            }.attach()
+        }
     }
 }
