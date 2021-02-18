@@ -27,7 +27,6 @@ class GameFragment : Fragment() {
     companion object {
         private const val TEST = 10000L
         private const val FIVE_MINUTES = 300_000L
-        private const val TEN_MINUTES = 600_000L
         private const val ONE_SECOND = 1000L
     }
 
@@ -105,9 +104,9 @@ class GameFragment : Fragment() {
     }
 
     private fun setupTabLayout() {
-        val sectionsPagerAdapter = SectionsPagerAdapter(this)
         with(binding) {
-            viewPager.adapter = sectionsPagerAdapter
+            viewPager.offscreenPageLimit = 4
+            viewPager.adapter = SectionsPagerAdapter(this@GameFragment.fragmentActivity)
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = "Question ${position + 1}"
             }.attach()
