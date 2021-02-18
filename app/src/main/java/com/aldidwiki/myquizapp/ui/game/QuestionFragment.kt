@@ -27,9 +27,7 @@ class QuestionFragment : Fragment() {
 
         fun newInstance(position: Int): QuestionFragment {
             return QuestionFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, position)
-                }
+                arguments = Bundle().apply { putInt(ARG_SECTION_NUMBER, position) }
             }
         }
     }
@@ -47,7 +45,6 @@ class QuestionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val position = arguments?.getInt(ARG_SECTION_NUMBER, 0) as Int
         subscribeData()
     }
 
@@ -95,10 +92,10 @@ class QuestionFragment : Fragment() {
             this.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
             if (this.text == correctAnswer) {
                 this.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correctAnswerColor))
-                viewModel.updateScore(true)
+                viewModel.setIsCorrect(true)
             } else {
                 this.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.wrongAnswerColor))
-                viewModel.updateScore(false)
+                viewModel.setIsCorrect(false)
             }
 
             with(binding) {
@@ -107,7 +104,7 @@ class QuestionFragment : Fragment() {
                     if (b != this@checkAnswer) b.isClickable = false
                 }
             }
-            viewModel.updateAnsweredCount()
+            viewModel.setHasAnswered(true)
         }
     }
 }
