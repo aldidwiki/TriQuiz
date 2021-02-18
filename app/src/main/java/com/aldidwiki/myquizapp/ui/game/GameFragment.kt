@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -35,10 +36,9 @@ class GameFragment : Fragment() {
             super.onPageSelected(position)
             binding.btnContinue.setOnClickListener {
                 binding.viewPager.setCurrentItem(position + 1, true)
-                viewModel.updateAnsweredCount()
-                viewModel.updateScore(viewModel.isCorrect)
+                viewModel.updateAnsweredCount(viewModel.isCorrect)
             }
-            binding.btnContinue.isEnabled = false
+            viewModel.setHasAnswered(false)
             if (position + 1 == 5) binding.btnContinue.text = "Finish"
         }
     }
@@ -62,7 +62,9 @@ class GameFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
+        binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -84,34 +86,6 @@ class GameFragment : Fragment() {
         val token = prefs.getString("token", "token") as String
         viewModel.setToken(token)
         println("debug: $token")
-
-        viewModel.answeredCount.observe(viewLifecycleOwner) {
-            val answeredQuestion = "Answered : $it/5"
-            binding.tvQuestion.text = answeredQuestion
-        }
-
-        viewModel.totalScore.observe(viewLifecycleOwner) {
-            val score = "Score : $it"
-            binding.tvScore.text = score
-        }
-
-        viewModel.correctAnswer.observe(viewLifecycleOwner) {
-            val correct = "Correct : $it"
-            binding.tvCorrectAnswers.text = correct
-        }
-
-        viewModel.incorrectAnswer.observe(viewLifecycleOwner) {
-            val incorrect = "Wrong : $it"
-            binding.tvWrongAnswers.text = incorrect
-        }
-
-        viewModel.hasAnswered.observe(viewLifecycleOwner) {
-            binding.btnContinue.isEnabled = it
-        }
-
-        viewModel.currentTimeString.observe(viewLifecycleOwner) {
-            binding.tvTime.text = it
-        }
 
         viewModel.eventTimeFinished.observe(viewLifecycleOwner) { hasFinished ->
             if (hasFinished)

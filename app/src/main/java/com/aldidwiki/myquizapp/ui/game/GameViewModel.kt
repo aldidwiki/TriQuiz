@@ -15,13 +15,14 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         this.token.value = token
     }
 
-    fun getQuestions() = token.switchMap { appRepository.getQuestions(it).asLiveData() }
+    fun getQuestions() = token.switchMap { token -> appRepository.getQuestions(token).asLiveData() }
 
     /*this is use to count the total question has already answered*/
     private val _answeredCount = MutableLiveData(0)
     val answeredCount: LiveData<Int> get() = _answeredCount
-    fun updateAnsweredCount() {
+    fun updateAnsweredCount(isCorrect: Boolean) {
         _answeredCount.value = _answeredCount.value?.plus(1)
+        updateScore(isCorrect)
     }
 
     /*this is to manage the next button state whether user already answer or not*/
@@ -31,7 +32,7 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         _hasAnswered.value = hasAnswered
     }
 
-    /*this is to a state to update the score function*/
+    /*use this to know whether the answer is correct or not to manage update score func*/
     var isCorrect = false
     fun setIsCorrect(isCorrect: Boolean) {
         this.isCorrect = isCorrect
@@ -44,7 +45,7 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
     val correctAnswer: LiveData<Int> get() = _correctAnswer
     private val _incorrectAnswer = MutableLiveData(0)
     val incorrectAnswer: LiveData<Int> get() = _incorrectAnswer
-    fun updateScore(isCorrect: Boolean) {
+    private fun updateScore(isCorrect: Boolean) {
         if (isCorrect) {
             _totalScore.value = _totalScore.value?.plus(20)
             _correctAnswer.value = _correctAnswer.value?.plus(1)

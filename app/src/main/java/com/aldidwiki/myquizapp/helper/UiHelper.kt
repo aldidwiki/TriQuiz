@@ -9,5 +9,3 @@ fun View.show(state: Boolean) {
 
 fun decodeHtml(text: String): String =
         HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
-
-var shouldRequestToken = false
