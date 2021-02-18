@@ -1,6 +1,5 @@
 package com.aldidwiki.myquizapp.ui.game
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,16 +15,12 @@ import com.aldidwiki.myquizapp.helper.decodeHtml
 import com.aldidwiki.myquizapp.helper.show
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class QuestionFragment : Fragment() {
     private var _binding: FragmentQuestionBinding? = null
-    private val viewModel by viewModels<GameViewModel>()
+    private val viewModel: GameViewModel by viewModels({ requireParentFragment() })
     private val binding get() = _binding!!
-
-    @Inject
-    lateinit var prefs: SharedPreferences
 
     companion object {
         private const val ARG_SECTION_NUMBER = "section_number"
@@ -53,11 +48,6 @@ class QuestionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val position = arguments?.getInt(ARG_SECTION_NUMBER, 0) as Int
-
-        val token = prefs.getString("token", "token") as String
-        println("debug: $token")
-        viewModel.setToken(token)
-
         subscribeData()
     }
 
@@ -92,7 +82,7 @@ class QuestionFragment : Fragment() {
                 btnD.text = decodeHtml(it[3])
             }
 
-            println("debug: $correctAnswer}")
+            println("debug: $correctAnswer")
             btnA.checkAnswer(decodeHtml(correctAnswer))
             btnB.checkAnswer(decodeHtml(correctAnswer))
             btnC.checkAnswer(decodeHtml(correctAnswer))
@@ -105,16 +95,19 @@ class QuestionFragment : Fragment() {
             this.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
             if (this.text == correctAnswer) {
                 this.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correctAnswerColor))
+                viewModel.updateScore(true)
             } else {
                 this.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.wrongAnswerColor))
+                viewModel.updateScore(false)
             }
 
             with(binding) {
                 val buttons = listOf(btnA, btnB, btnC, btnD)
                 for (b in buttons) {
-                    if (b != this@checkAnswer) b.isClickable = true
+                    if (b != this@checkAnswer) b.isClickable = false
                 }
             }
+            viewModel.updateAnsweredCount()
         }
     }
 }
