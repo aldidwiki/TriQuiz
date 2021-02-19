@@ -74,7 +74,6 @@ class GameFragment : Fragment() {
         fragmentActivity.supportActionBar?.show()
         binding.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
         _binding = null
-        println("debugDestroy: called")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

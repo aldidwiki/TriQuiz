@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
@@ -25,6 +26,7 @@ class PreGameFragment : Fragment() {
     private var _binding: FragmentPreGameBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<PreGameViewModel>()
+    private val args by navArgs<PreGameFragmentArgs>()
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -50,6 +52,7 @@ class PreGameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val activity = activity as AppCompatActivity
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        activity.supportActionBar?.title = args.categoryName
 
         binding.edtName.requestFocus()
         binding.btnChangeDifficulties.setOnClickListener {

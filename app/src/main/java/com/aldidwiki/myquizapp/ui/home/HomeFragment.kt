@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.aldidwiki.myquizapp.R
 import com.aldidwiki.myquizapp.adapter.CategoryAdapter
 import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.data.source.remote.entity.TriviaCategoriesItem
@@ -73,6 +72,8 @@ class HomeFragment : Fragment(), CategoryAdapter.OnItemClickCallback {
     }
 
     override fun onItemClicked(item: TriviaCategoriesItem) {
-        findNavController().navigate(R.id.action_navigation_home_to_preGameFragment)
+        val toPreGame = HomeFragmentDirections
+                .actionNavigationHomeToPreGameFragment(item.id, item.name)
+        findNavController().navigate(toPreGame)
     }
 }
