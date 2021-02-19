@@ -4,6 +4,7 @@ import android.os.CountDownTimer
 import android.text.format.DateUtils
 import androidx.lifecycle.*
 import com.aldidwiki.myquizapp.data.AppRepository
+import com.aldidwiki.myquizapp.helper.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -25,6 +26,9 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         updateScore(isCorrect)
     }
 
+    /*this is to manage state whether app is on last question or not*/
+    val onLastQuestion = Transformations.map(answeredCount) { it == Constant.QUESTION_COUNT }
+
     /*this is to manage the next button state whether user already answer or not*/
     private val _hasAnswered = MutableLiveData(false)
     val hasAnswered: LiveData<Boolean> get() = _hasAnswered
@@ -32,7 +36,8 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         _hasAnswered.value = hasAnswered
     }
 
-    /*use this to know whether the answer is correct or not to manage update score func*/
+    /*use this to know whether the answer is correct or not to manage update score func,
+    * also for communicating between question fragment and game fragment*/
     var isCorrect = false
     fun setIsCorrect(isCorrect: Boolean) {
         this.isCorrect = isCorrect

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,6 +18,7 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.aldidwiki.myquizapp.R
 import com.aldidwiki.myquizapp.adapter.SectionsPagerAdapter
 import com.aldidwiki.myquizapp.databinding.FragmentGameBinding
+import com.aldidwiki.myquizapp.helper.Constant
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -39,7 +41,7 @@ class GameFragment : Fragment() {
                 viewModel.updateAnsweredCount(viewModel.isCorrect)
             }
             viewModel.setHasAnswered(false)
-            if (position + 1 == 5) binding.btnContinue.text = "Finish"
+            if (position + 1 == Constant.QUESTION_COUNT) binding.btnContinue.text = "Finish"
         }
     }
 
@@ -100,12 +102,19 @@ class GameFragment : Fragment() {
                 }
             else requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         }
+
+        viewModel.onLastQuestion.observe(viewLifecycleOwner) { isLastQuestion ->
+            if (isLastQuestion) {
+                binding.btnContinue.isEnabled = false
+                Toast.makeText(activity, "This is last question", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupTabLayout() {
         with(binding) {
             viewPager.isUserInputEnabled = false
-            viewPager.offscreenPageLimit = 4
+            viewPager.offscreenPageLimit = Constant.QUESTION_COUNT - 1
             viewPager.adapter = SectionsPagerAdapter(this@GameFragment)
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = "Question ${position + 1}"
