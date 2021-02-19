@@ -81,7 +81,7 @@ class QuestionFragment : Fragment() {
                 btnD.text = decodeHtml(it[3])
             }
 
-            println("debug: $correctAnswer")
+//            println("debug: $correctAnswer")
             btnA.checkAnswer(decodeHtml(correctAnswer))
             btnB.checkAnswer(decodeHtml(correctAnswer))
             btnC.checkAnswer(decodeHtml(correctAnswer))

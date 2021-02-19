@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_preGameFragment"
-            app:destination="@id/preGameFragment" />
+            app:destination="@id/preGameFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -27,11 +31,37 @@
         tools:layout="@layout/fragment_pre_game">
         <action
             android:id="@+id/action_preGameFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.aldidwiki.myquizapp.ui.game.GameFragment"
         android:label="Game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game">
+        <action
+            android:id="@+id/action_gameFragment_to_achievementFragment"
+            app:destination="@id/achievementFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/preGameFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/achievementFragment"
+        android:name="com.aldidwiki.myquizapp.ui.achievement.AchievementFragment"
+        android:label="Achievement"
+        tools:layout="@layout/fragment_achievement">
+        <action
+            android:id="@+id/action_achievementFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -75,6 +74,7 @@ class GameFragment : Fragment() {
         fragmentActivity.supportActionBar?.show()
         binding.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback)
         _binding = null
+        println("debugDestroy: called")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,7 +87,6 @@ class GameFragment : Fragment() {
     private fun subscribeData() {
         val token = prefs.getString("token", "token") as String
         viewModel.setToken(token)
-        println("debug: $token")
 
         viewModel.eventTimeFinished.observe(viewLifecycleOwner) { hasFinished ->
             if (hasFinished)
@@ -104,10 +103,8 @@ class GameFragment : Fragment() {
         }
 
         viewModel.onLastQuestion.observe(viewLifecycleOwner) { isLastQuestion ->
-            if (isLastQuestion) {
-                binding.btnContinue.isEnabled = false
-                Toast.makeText(activity, "This is last question", Toast.LENGTH_SHORT).show()
-            }
+            if (isLastQuestion)
+                findNavController().navigate(R.id.action_gameFragment_to_achievementFragment)
         }
     }
 
