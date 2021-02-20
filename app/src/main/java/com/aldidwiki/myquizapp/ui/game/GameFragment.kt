@@ -91,6 +91,7 @@ class GameFragment : Fragment() {
 
     private fun subscribeData() {
         val token = args.sessionToken as String
+        viewModel.userName = args.userName
         viewModel.setToken(token)
 
         viewModel.user.observe(viewLifecycleOwner) {

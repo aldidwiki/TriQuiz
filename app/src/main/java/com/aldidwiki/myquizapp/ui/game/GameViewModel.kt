@@ -15,6 +15,7 @@ import javax.inject.Inject
 class GameViewModel @Inject constructor(private val appRepository: AppRepository) : ViewModel() {
     /*this is to set token that used to retrieve the question from api*/
     private val token = MutableLiveData<String>()
+    var userName = ""
     fun setToken(token: String) {
         this.token.value = token
     }
@@ -55,7 +56,7 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
 
         _user.value = UserEntity(
                 id = 0,
-                name = "Gultom",
+                name = userName,
                 totalAnswered = result["total_answered"] ?: 0,
                 totalScore = result["total_score"] ?: 0,
                 totalCorrect = result["total_correct"] ?: 0,

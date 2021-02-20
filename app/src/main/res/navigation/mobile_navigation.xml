@@ -57,6 +57,9 @@
             android:name="sessionToken"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/achievementFragment"
