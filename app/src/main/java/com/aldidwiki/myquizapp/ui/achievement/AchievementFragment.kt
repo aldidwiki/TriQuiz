@@ -62,6 +62,8 @@ class AchievementFragment : Fragment() {
     }
 
     private fun initData() {
+        viewModel.insertUser(args.userEntity)
+
         viewModel.getTempResults.observe(viewLifecycleOwner) {
             achievementAdapter.submitList(it)
         }
