@@ -1,25 +1,22 @@
 package com.aldidwiki.myquizapp.ui.pregame
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
-import com.aldidwiki.myquizapp.R
+import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.databinding.FragmentPreGameBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class PreGameFragment : Fragment() {
@@ -27,9 +24,6 @@ class PreGameFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModels<PreGameViewModel>()
     private val args by navArgs<PreGameFragmentArgs>()
-
-    @Inject
-    lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +61,23 @@ class PreGameFragment : Fragment() {
             }
         }
 
-        binding.btnStart.setOnClickListener {
-            viewModel.clearQuestionEntity()
-            findNavController().navigate(R.id.action_preGameFragment_to_gameFragment)
-        }
-
-        lifecycleScope.launchWhenCreated {
-            prefs.edit { putString("token", viewModel.getToken()?.token) }
+        with(binding) {
+            btnStart.setOnClickListener {
+                viewModel.clearQuestionEntity()
+                viewModel.getToken().observe(viewLifecycleOwner) { state ->
+                    when (state) {
+                        is ApiResponse.Success -> {
+                            val toGame = PreGameFragmentDirections.actionPreGameFragmentToGameFragment(state.body?.token)
+                            findNavController().navigate(toGame)
+                        }
+                        is ApiResponse.Loading -> btnStart.startAnimation()
+                        is ApiResponse.Error -> {
+                            btnStart.revertAnimation()
+                            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
         }
     }
 

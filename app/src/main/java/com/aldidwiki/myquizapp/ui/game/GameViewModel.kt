@@ -35,10 +35,11 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         }
     }
 
+    /*this is to observe the score, answered count, etc for achievement fragment*/
     private val result = mutableMapOf<String, Int>()
     private val _user = MediatorLiveData<UserEntity>()
     val user: LiveData<UserEntity> get() = _user
-    fun initUser() {
+    private fun initUser() {
         _user.addSource(answeredCount) { totalAnswered -> result["total_answered"] = totalAnswered }
         _user.addSource(totalScore) { totalScore -> result["total_score"] = totalScore }
         _user.addSource(correctAnswer) { totalCorrect -> result["total_correct"] = totalCorrect }
@@ -58,8 +59,7 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
                 totalAnswered = result["total_answered"] ?: 0,
                 totalScore = result["total_score"] ?: 0,
                 totalCorrect = result["total_correct"] ?: 0,
-                totalIncorrect = result["total_incorrect"] ?: 0,
-                sessionToken = "Not Yet"
+                totalIncorrect = result["total_incorrect"] ?: 0
         )
     }
 
@@ -113,6 +113,8 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
     }
 
     init {
+        initUser()
+
         timer = object : CountDownTimer(ONE_MINUTE, ONE_SECOND) {
             override fun onTick(millisUntilFinished: Long) {
                 _currentTime.value = millisUntilFinished / ONE_SECOND

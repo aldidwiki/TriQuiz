@@ -47,18 +47,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_name_layout" />
 
-    <com.google.android.material.button.MaterialButton
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/btn_start"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/start"
+        android:textColor="@android:color/white"
         android:textSize="32sp"
-        app:backgroundTint="@color/secondaryColor"
-        app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_change_difficulties" />
+        app:layout_constraintTop_toBottomOf="@id/btn_change_difficulties"
+        app:spinning_bar_color="@android:color/white"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

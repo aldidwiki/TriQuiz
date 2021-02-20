@@ -13,8 +13,8 @@ interface LocalService {
     @Query("SELECT * FROM question_entity")
     fun getTempQuestion(): Flow<List<QuestionEntity>>
 
-    @Query("SELECT * FROM user_entity WHERE sessionToken = :sessionToken")
-    fun getUser(sessionToken: String): Flow<UserEntity>
+    @Query("SELECT * FROM user_entity")
+    fun getUser(): Flow<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertQuestion(question: QuestionEntity)

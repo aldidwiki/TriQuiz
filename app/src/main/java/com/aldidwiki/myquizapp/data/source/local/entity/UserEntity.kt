@@ -14,5 +14,4 @@ data class UserEntity(
         val totalScore: Int,
         val totalCorrect: Int,
         val totalIncorrect: Int,
-        val sessionToken: String
 ) : Parcelable

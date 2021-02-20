@@ -1,6 +1,5 @@
 package com.aldidwiki.myquizapp.ui.game
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -24,7 +24,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class GameFragment : Fragment() {
@@ -33,9 +32,7 @@ class GameFragment : Fragment() {
     private lateinit var fragmentActivity: AppCompatActivity
     private val viewModel: GameViewModel by viewModels()
     private var toAchievement: NavDirections? = null
-
-    @Inject
-    lateinit var prefs: SharedPreferences
+    private val args by navArgs<GameFragmentArgs>()
 
     private var onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -93,9 +90,8 @@ class GameFragment : Fragment() {
     }
 
     private fun subscribeData() {
-        val token = prefs.getString("token", "token") as String
+        val token = args.sessionToken as String
         viewModel.setToken(token)
-        viewModel.initUser()
 
         viewModel.user.observe(viewLifecycleOwner) {
             toAchievement = GameFragmentDirections.actionGameFragmentToAchievementFragment(it)

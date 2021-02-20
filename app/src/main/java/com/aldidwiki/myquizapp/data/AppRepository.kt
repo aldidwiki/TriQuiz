@@ -47,10 +47,18 @@ class AppRepository @Inject constructor(
         }
     }.flowOn(IO)
 
-    override suspend fun getToken(): TokenResponse? {
-        val tokenResponse = remoteService.getToken("request")
-        return tokenResponse.body()
-    }
+    override fun getToken(): Flow<ApiResponse<TokenResponse?>> = flow {
+        emit(ApiResponse.Loading)
+        try {
+            val tokenResponse = remoteService.getToken("request")
+            if (tokenResponse.isSuccessful) tokenResponse.body()?.let {
+                emit(ApiResponse.Success(it))
+            } else emit(ApiResponse.Error(tokenResponse.errorBody().toString()))
+        } catch (e: Exception) {
+            Timber.e(e)
+            emit(ApiResponse.Error(e.message.toString()))
+        }
+    }.flowOn(IO).distinctUntilChanged()
 
     override suspend fun insertQuestion(question: QuestionEntity) {
         localService.insertQuestion(question)
@@ -64,8 +72,8 @@ class AppRepository @Inject constructor(
         return localService.getTempQuestion()
     }
 
-    override fun getUser(sessionToken: String): Flow<UserEntity> {
-        return localService.getUser(sessionToken)
+    override fun getUser(): Flow<UserEntity> {
+        return localService.getUser()
     }
 
     override suspend fun insertUser(user: UserEntity) {
