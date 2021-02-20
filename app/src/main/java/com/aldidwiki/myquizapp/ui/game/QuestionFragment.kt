@@ -81,7 +81,6 @@ class QuestionFragment : Fragment() {
                 btnD.text = decodeHtml(it[3])
             }
 
-//            println("debug: $correctAnswer")
             btnA.checkAnswer(decodeHtml(correctAnswer))
             btnB.checkAnswer(decodeHtml(correctAnswer))
             btnC.checkAnswer(decodeHtml(correctAnswer))
@@ -91,6 +90,8 @@ class QuestionFragment : Fragment() {
 
     private fun MaterialButton.checkAnswer(correctAnswer: String) {
         this.setOnClickListener {
+            viewModel.questionFix = decodeHtml(binding.tvQuestion.text.toString())
+            viewModel.correctAnswerFix = correctAnswer
             this.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
             if (this.text == correctAnswer) {
                 this.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correctAnswerColor))

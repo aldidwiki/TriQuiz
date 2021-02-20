@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="8dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="tempData"
+            type="com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp">
 
-        <TextView
-            android:id="@+id/tv_question"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?colorOnBackground"
-            android:textSize="18sp"
-            tools:text="What airline was the owner of the plane that crashed off the coast of Nova Scotia in 1998?" />
+            android:orientation="vertical"
+            android:padding="14dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/correct_answer"
-            android:textColor="?colorOnBackground"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{tempData.question}"
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                tools:text="What airline was the owner of the plane that crashed off the coast of Nova Scotia in 1998?" />
 
-        <TextView
-            android:id="@+id/tv_correct_answers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:textSize="14sp"
-            tools:text="The Name of a Warner Brothers Cartoon Character" />
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/correct_answer"
+                android:textColor="?colorOnBackground"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_correct_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{tempData.correctAnswer}"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:isCorrect="@{tempData.correct}"
+                tools:text="The Name of a Warner Brothers Cartoon Character" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

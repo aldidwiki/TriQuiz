@@ -68,6 +68,7 @@ class PreGameFragment : Fragment() {
         }
 
         binding.btnStart.setOnClickListener {
+            viewModel.clearQuestionEntity()
             findNavController().navigate(R.id.action_preGameFragment_to_gameFragment)
         }
 

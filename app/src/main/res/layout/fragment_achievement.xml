@@ -14,6 +14,7 @@
             layout="@layout/item_user_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

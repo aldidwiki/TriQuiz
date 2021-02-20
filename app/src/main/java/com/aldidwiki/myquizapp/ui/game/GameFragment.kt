@@ -38,6 +38,7 @@ class GameFragment : Fragment() {
             binding.btnContinue.setOnClickListener {
                 binding.viewPager.setCurrentItem(position + 1, true)
                 viewModel.updateAnsweredCount(viewModel.isCorrect)
+                viewModel.insertTempQuestion()
             }
             viewModel.setHasAnswered(false)
             if (position + 1 == Constant.QUESTION_COUNT) binding.btnContinue.text = "Finish"

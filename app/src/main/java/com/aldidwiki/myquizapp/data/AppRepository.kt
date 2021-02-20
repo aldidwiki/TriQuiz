@@ -1,5 +1,7 @@
 package com.aldidwiki.myquizapp.data
 
+import com.aldidwiki.myquizapp.data.source.local.LocalService
+import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
 import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.data.source.remote.RemoteService
 import com.aldidwiki.myquizapp.data.source.remote.entity.CategoryResponse
@@ -14,7 +16,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AppRepository @Inject constructor(
-        private val remoteService: RemoteService
+        private val remoteService: RemoteService,
+        private val localService: LocalService
 ) : AppDataSource {
 
     override fun getCategories(): Flow<ApiResponse<CategoryResponse>> = flow {
@@ -46,5 +49,17 @@ class AppRepository @Inject constructor(
     override suspend fun getToken(): TokenResponse? {
         val tokenResponse = remoteService.getToken("request")
         return tokenResponse.body()
+    }
+
+    override suspend fun insertQuestion(question: QuestionEntity) {
+        localService.insertQuestion(question)
+    }
+
+    override suspend fun clearQuestionEntity() {
+        localService.clearQuestionEntity()
+    }
+
+    override fun getTempResults(): Flow<List<QuestionEntity>> {
+        return localService.getTempQuestion()
     }
 }

@@ -4,8 +4,10 @@ import android.os.CountDownTimer
 import android.text.format.DateUtils
 import androidx.lifecycle.*
 import com.aldidwiki.myquizapp.data.AppRepository
+import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
 import com.aldidwiki.myquizapp.helper.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,6 +19,21 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
     }
 
     fun getQuestions() = token.switchMap { token -> appRepository.getQuestions(token).asLiveData() }
+
+    /*this is to save the answered question to temp database, the database will be cleared
+    * every time user start the quiz for the first time*/
+    var questionFix = ""
+    var correctAnswerFix = ""
+    fun insertTempQuestion() {
+        viewModelScope.launch {
+            appRepository.insertQuestion(QuestionEntity(
+//                    id = 0,
+                    question = questionFix,
+                    correctAnswer = correctAnswerFix,
+                    isCorrect = isCorrect
+            ))
+        }
+    }
 
     /*this is use to count the total question has already answered*/
     private val _answeredCount = MutableLiveData(0)
