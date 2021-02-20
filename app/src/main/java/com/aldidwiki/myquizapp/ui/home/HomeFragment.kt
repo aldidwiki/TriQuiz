@@ -72,8 +72,7 @@ class HomeFragment : Fragment(), CategoryAdapter.OnItemClickCallback {
     }
 
     override fun onItemClicked(item: TriviaCategoriesItem) {
-        val toPreGame = HomeFragmentDirections
-                .actionNavigationHomeToPreGameFragment(item.id, item.name)
+        val toPreGame = HomeFragmentDirections.actionNavigationHomeToPreGameFragment(item)
         findNavController().navigate(toPreGame)
     }
 }

@@ -37,11 +37,8 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <argument
-            android:name="categoryId"
-            app:argType="integer" />
-        <argument
-            android:name="categoryName"
-            app:argType="string" />
+            android:name="categoryItem"
+            app:argType="com.aldidwiki.myquizapp.data.source.remote.entity.TriviaCategoriesItem" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"

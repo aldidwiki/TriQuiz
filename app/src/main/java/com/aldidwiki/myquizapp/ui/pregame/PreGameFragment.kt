@@ -45,8 +45,10 @@ class PreGameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity = activity as AppCompatActivity
+        val categoryItems = args.categoryItem
+
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        activity.supportActionBar?.title = args.categoryName
+        activity.supportActionBar?.title = args.categoryItem.name
 
         binding.edtName.requestFocus()
         binding.btnChangeDifficulties.setOnClickListener {
