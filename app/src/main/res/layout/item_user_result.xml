@@ -1,81 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/img_trophy"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/trophy_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+    <data>
 
-    <TextView
-        android:id="@+id/tv_your_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/your_result_s_are_here"
-        android:textColor="?colorOnBackground"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_trophy" />
+        <variable
+            name="questionCount"
+            type="Integer" />
 
-    <LinearLayout
-        android:id="@+id/ll"
+        <variable
+            name="result"
+            type="com.aldidwiki.myquizapp.data.source.local.entity.UserEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="18dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_your_result">
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tv_correct_answers"
+            android:id="@+id/tv_your_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginTop="32dp"
+            android:text="@string/your_score_is"
+            android:textAlignment="center"
             android:textColor="?colorOnBackground"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_check_circle"
-            tools:text="Correct : 3/5" />
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_answered_question"
+        <com.robinhood.ticker.TickerView
+            android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:text="@string/initial_score"
+            android:textAlignment="center"
             android:textColor="?colorOnBackground"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic__assignment"
-            tools:text="Answered : 5/5" />
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_your_score"
+            app:ticker_animationDuration="1500"
+            app:ticker_defaultPreferredScrollingDirection="up" />
 
-        <TextView
-            android:id="@+id/tv_wrong_answers"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_score">
+
+            <TextView
+                android:id="@+id/tv_correct_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{`Correct : ` + Integer.toString(result.totalCorrect)}"
+                android:textColor="?colorOnBackground"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_check_circle"
+                tools:text="Correct : 3/5" />
+
+            <TextView
+                android:id="@+id/tv_answered_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{`Answered : ` + Integer.toString(result.totalAnswered) + `/` + Integer.toString(questionCount)}"
+                android:textColor="?colorOnBackground"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic__assignment"
+                tools:text="Answered : 5/5" />
+
+            <TextView
+                android:id="@+id/tv_wrong_answers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{`Incorrect : ` + Integer.toString(result.totalIncorrect)}"
+                android:textColor="?colorOnBackground"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_wrong"
+                tools:text="Wrong : 2/5" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_final_result"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="?colorOnBackground"
-            android:textStyle="bold"
-            app:drawableStartCompat="@drawable/ic_wrong"
-            tools:text="Wrong : 2/5" />
-    </LinearLayout>
+            android:layout_marginTop="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll"
+            tools:listitem="@layout/item_final_result" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_final_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll"
-        tools:listitem="@layout/item_final_result" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

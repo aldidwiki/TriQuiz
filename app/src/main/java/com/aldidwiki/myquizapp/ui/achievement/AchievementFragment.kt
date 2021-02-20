@@ -15,6 +15,7 @@ import com.aldidwiki.myquizapp.R
 import com.aldidwiki.myquizapp.adapter.AchievementAdapter
 import com.aldidwiki.myquizapp.databinding.FragmentAchievementBinding
 import com.aldidwiki.myquizapp.helper.Constant
+import com.robinhood.ticker.TickerUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -66,10 +67,11 @@ class AchievementFragment : Fragment() {
         }
 
         with(binding.includeUserResult) {
-            tvAnsweredQuestion.text =
-                    "Answered : ${args.userEntity.totalAnswered}/${Constant.QUESTION_COUNT}"
-            tvCorrectAnswers.text = "Correct : ${args.userEntity.totalCorrect}"
-            tvWrongAnswers.text = "Incorrect : ${args.userEntity.totalIncorrect}"
+            result = args.userEntity
+            questionCount = Constant.QUESTION_COUNT
+
+            tvScore.setCharacterLists(TickerUtils.provideNumberList())
+            tvScore.text = args.userEntity.totalScore.toString()
         }
     }
 
