@@ -34,13 +34,12 @@
         android:layout_marginTop="18dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_your_result">
 
         <TextView
             android:id="@+id/tv_correct_answers"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="?colorOnBackground"
@@ -50,7 +49,7 @@
 
         <TextView
             android:id="@+id/tv_answered_question"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="?colorOnBackground"
@@ -60,7 +59,7 @@
 
         <TextView
             android:id="@+id/tv_wrong_answers"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="?colorOnBackground"

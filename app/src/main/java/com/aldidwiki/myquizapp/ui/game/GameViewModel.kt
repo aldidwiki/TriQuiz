@@ -5,6 +5,7 @@ import android.text.format.DateUtils
 import androidx.lifecycle.*
 import com.aldidwiki.myquizapp.data.AppRepository
 import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
+import com.aldidwiki.myquizapp.data.source.local.entity.UserEntity
 import com.aldidwiki.myquizapp.helper.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,12 +28,21 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
     fun insertTempQuestion() {
         viewModelScope.launch {
             appRepository.insertQuestion(QuestionEntity(
-//                    id = 0,
                     question = questionFix,
                     correctAnswer = correctAnswerFix,
                     isCorrect = isCorrect
             ))
         }
+    }
+
+    private val result = mutableMapOf<String, Int>()
+    private val _user = MediatorLiveData<UserEntity>()
+    val user: LiveData<UserEntity> get() = _user
+    fun initUser() {
+        _user.addSource(answeredCount) { totalAnswered -> result["total_answered"] = totalAnswered }
+        _user.addSource(totalScore) { totalScore -> result["total_score"] = totalScore }
+        _user.addSource(correctAnswer) { totalCorrect -> result["total_correct"] = totalCorrect }
+        _user.addSource(incorrectAnswer) { totalIncorrect -> result["total_incorrect"] = totalIncorrect }
     }
 
     /*this is use to count the total question has already answered*/
@@ -41,6 +51,16 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
     fun updateAnsweredCount(isCorrect: Boolean) {
         _answeredCount.value = _answeredCount.value?.plus(1)
         updateScore(isCorrect)
+
+        _user.value = UserEntity(
+                id = 0,
+                name = "Gultom",
+                totalAnswered = result["total_answered"] ?: 0,
+                totalScore = result["total_score"] ?: 0,
+                totalCorrect = result["total_correct"] ?: 0,
+                totalIncorrect = result["total_incorrect"] ?: 0,
+                sessionToken = "Not Yet"
+        )
     }
 
     /*this is to manage state whether app is on last question or not*/
@@ -80,7 +100,7 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
     /*this is to manage the state whether the time is finished or not*/
     private val _eventTimeFinished = MutableLiveData(false)
     val eventTimeFinished: LiveData<Boolean> get() = _eventTimeFinished
-    fun onTimeFinished() {
+    private fun onTimeFinished() {
         _eventTimeFinished.value = true
     }
 

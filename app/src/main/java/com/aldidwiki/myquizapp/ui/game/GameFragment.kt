@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
@@ -20,6 +22,8 @@ import com.aldidwiki.myquizapp.databinding.FragmentGameBinding
 import com.aldidwiki.myquizapp.helper.Constant
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,6 +32,7 @@ class GameFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var fragmentActivity: AppCompatActivity
     private val viewModel: GameViewModel by viewModels()
+    private var toAchievement: NavDirections? = null
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -40,6 +45,7 @@ class GameFragment : Fragment() {
                 viewModel.updateAnsweredCount(viewModel.isCorrect)
                 viewModel.insertTempQuestion()
             }
+
             viewModel.setHasAnswered(false)
             if (position + 1 == Constant.QUESTION_COUNT) binding.btnContinue.text = "Finish"
         }
@@ -49,8 +55,10 @@ class GameFragment : Fragment() {
         override fun handleOnBackPressed() {
             MaterialDialog(requireContext()).show {
                 title(text = "Confirmation")
-                message(text = "Time is still available, are you sure want to exit?")
-                positiveButton(text = "Yes") { findNavController().navigateUp() }
+                message(text = "Time is still available, are you sure want to end the quiz?")
+                positiveButton(text = "Yes") {
+                    toAchievement?.let { findNavController().navigate(it) }
+                }
                 negativeButton(text = "No")
                 lifecycleOwner(viewLifecycleOwner)
             }
@@ -87,6 +95,11 @@ class GameFragment : Fragment() {
     private fun subscribeData() {
         val token = prefs.getString("token", "token") as String
         viewModel.setToken(token)
+        viewModel.initUser()
+
+        viewModel.user.observe(viewLifecycleOwner) {
+            toAchievement = GameFragmentDirections.actionGameFragmentToAchievementFragment(it)
+        }
 
         viewModel.eventTimeFinished.observe(viewLifecycleOwner) { hasFinished ->
             if (hasFinished)
@@ -96,7 +109,9 @@ class GameFragment : Fragment() {
                     cancelOnTouchOutside(false)
                     icon(R.drawable.ic_access_alarms)
                     message(text = "You running out time, you can retake the quiz")
-                    positiveButton(text = "Continue") { findNavController().navigateUp() }
+                    positiveButton(text = "Continue") {
+                        toAchievement?.let { findNavController().navigate(it) }
+                    }
                     lifecycleOwner(viewLifecycleOwner)
                 }
             else requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -104,7 +119,11 @@ class GameFragment : Fragment() {
 
         viewModel.onLastQuestion.observe(viewLifecycleOwner) { isLastQuestion ->
             if (isLastQuestion)
-                findNavController().navigate(R.id.action_gameFragment_to_achievementFragment)
+                lifecycleScope.launch {
+                    binding.btnContinue.startAnimation()
+                    delay(1500L)
+                    toAchievement?.let { findNavController().navigate(it) }
+                }
         }
     }
 

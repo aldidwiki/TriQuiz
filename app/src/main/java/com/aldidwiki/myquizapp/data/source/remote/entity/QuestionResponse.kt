@@ -1,8 +1,6 @@
 package com.aldidwiki.myquizapp.data.source.remote.entity
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 data class QuestionResponse(
 
@@ -13,7 +11,6 @@ data class QuestionResponse(
         val results: List<QuestionItems>
 )
 
-@Parcelize
 data class QuestionItems(
 
         @field:SerializedName("difficulty")
@@ -33,4 +30,4 @@ data class QuestionItems(
 
         @field:SerializedName("type")
         val type: String
-) : Parcelable
+)

@@ -92,6 +92,7 @@ class QuestionFragment : Fragment() {
         this.setOnClickListener {
             viewModel.questionFix = decodeHtml(binding.tvQuestion.text.toString())
             viewModel.correctAnswerFix = correctAnswer
+
             this.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
             if (this.text == correctAnswer) {
                 this.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.correctAnswerColor))

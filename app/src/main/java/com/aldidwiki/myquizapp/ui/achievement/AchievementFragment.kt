@@ -9,10 +9,12 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldidwiki.myquizapp.R
 import com.aldidwiki.myquizapp.adapter.AchievementAdapter
 import com.aldidwiki.myquizapp.databinding.FragmentAchievementBinding
+import com.aldidwiki.myquizapp.helper.Constant
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,6 +23,7 @@ class AchievementFragment : Fragment() {
     private var _binding: FragmentAchievementBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<AchievementViewModel>()
+    private val args by navArgs<AchievementFragmentArgs>()
 
     @Inject
     lateinit var achievementAdapter: AchievementAdapter
@@ -60,6 +63,13 @@ class AchievementFragment : Fragment() {
     private fun initData() {
         viewModel.getTempResults.observe(viewLifecycleOwner) {
             achievementAdapter.submitList(it)
+        }
+
+        with(binding.includeUserResult) {
+            tvAnsweredQuestion.text =
+                    "Answered : ${args.userEntity.totalAnswered}/${Constant.QUESTION_COUNT}"
+            tvCorrectAnswers.text = "Correct : ${args.userEntity.totalCorrect}"
+            tvWrongAnswers.text = "Incorrect : ${args.userEntity.totalIncorrect}"
         }
     }
 

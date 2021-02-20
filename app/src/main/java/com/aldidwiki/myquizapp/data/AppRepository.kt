@@ -2,6 +2,7 @@ package com.aldidwiki.myquizapp.data
 
 import com.aldidwiki.myquizapp.data.source.local.LocalService
 import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
+import com.aldidwiki.myquizapp.data.source.local.entity.UserEntity
 import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.data.source.remote.RemoteService
 import com.aldidwiki.myquizapp.data.source.remote.entity.CategoryResponse
@@ -61,5 +62,13 @@ class AppRepository @Inject constructor(
 
     override fun getTempResults(): Flow<List<QuestionEntity>> {
         return localService.getTempQuestion()
+    }
+
+    override fun getUser(sessionToken: String): Flow<UserEntity> {
+        return localService.getUser(sessionToken)
+    }
+
+    override suspend fun insertUser(user: UserEntity) {
+        localService.insertUser(user)
     }
 }
