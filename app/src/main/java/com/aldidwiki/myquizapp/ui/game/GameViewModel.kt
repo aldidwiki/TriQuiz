@@ -20,7 +20,14 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         this.token.value = token
     }
 
-    fun getQuestions() = token.switchMap { token -> appRepository.getQuestions(token).asLiveData() }
+    private val categoryId = MutableLiveData<Int>()
+    fun setCategoryId(categoryId: Int) {
+        this.categoryId.value = categoryId
+    }
+
+    fun getQuestions() = token.switchMap { token ->
+        categoryId.switchMap { categoryId -> appRepository.getQuestions(token, categoryId).asLiveData() }
+    }
 
     /*this is to save the answered question to temp database, the database will be cleared
     * every time user start the quiz for the first time*/

@@ -55,6 +55,7 @@ class GameFragment : Fragment() {
                 message(text = "Time is still available, are you sure want to end the quiz?")
                 positiveButton(text = "Yes") {
                     toAchievement?.let { findNavController().navigate(it) }
+                            ?: findNavController().navigateUp()
                 }
                 negativeButton(text = "No")
                 lifecycleOwner(viewLifecycleOwner)
@@ -93,6 +94,7 @@ class GameFragment : Fragment() {
         val token = args.sessionToken as String
         viewModel.userName = args.userName
         viewModel.setToken(token)
+        viewModel.setCategoryId(args.categoryId)
 
         viewModel.user.observe(viewLifecycleOwner) {
             toAchievement = GameFragmentDirections.actionGameFragmentToAchievementFragment(it)
@@ -108,6 +110,7 @@ class GameFragment : Fragment() {
                     message(text = "You running out time, you can retake the quiz")
                     positiveButton(text = "Continue") {
                         toAchievement?.let { findNavController().navigate(it) }
+                                ?: findNavController().navigateUp()
                     }
                     lifecycleOwner(viewLifecycleOwner)
                 }

@@ -75,7 +75,8 @@ class PreGameFragment : Fragment() {
                                 val toGame = PreGameFragmentDirections
                                         .actionPreGameFragmentToGameFragment(
                                                 state.body?.token,
-                                                edtName.text.toString().trimStart()
+                                                edtName.text.toString().trimStart(),
+                                                args.categoryItem.id
                                         )
                                 findNavController().navigate(toGame)
                             }

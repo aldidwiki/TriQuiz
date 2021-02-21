@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface AppDataSource {
     fun getCategories(): Flow<ApiResponse<CategoryResponse>>
 
-    fun getQuestions(token: String): Flow<ApiResponse<List<QuestionItems>>>
+    fun getQuestions(token: String, categoryId: Int): Flow<ApiResponse<List<QuestionItems>>>
 
     fun getTempResults(): Flow<List<QuestionEntity>>
 

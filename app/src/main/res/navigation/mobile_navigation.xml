@@ -60,6 +60,9 @@
         <argument
             android:name="userName"
             app:argType="string" />
+        <argument
+            android:name="categoryId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/achievementFragment"
