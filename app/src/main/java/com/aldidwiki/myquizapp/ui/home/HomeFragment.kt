@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.aldidwiki.myquizapp.R
 import com.aldidwiki.myquizapp.adapter.CategoryAdapter
 import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.data.source.remote.entity.TriviaCategoriesItem
@@ -27,10 +28,8 @@ class HomeFragment : Fragment(), CategoryAdapter.OnItemClickCallback {
     @Inject
     lateinit var categoryAdapter: CategoryAdapter
 
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,7 +64,7 @@ class HomeFragment : Fragment(), CategoryAdapter.OnItemClickCallback {
                 is ApiResponse.Loading -> binding.progressBar.show(true)
                 is ApiResponse.Error -> {
                     binding.progressBar.show(false)
-                    Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, resources.getString(R.string.error_message), Toast.LENGTH_SHORT).show()
                 }
             }
         }

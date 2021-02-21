@@ -33,9 +33,7 @@ class AchievementAdapter @Inject constructor()
     }
 
     override fun onBindViewHolder(holder: AchievementViewHolder, position: Int) {
-        with(holder) {
-            bind(getItem(position))
-        }
+        holder.bind(getItem(position))
     }
 
     inner class AchievementViewHolder(private val binding: ItemFinalResultBinding)

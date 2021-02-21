@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.aldidwiki.myquizapp.R
 import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.databinding.FragmentQuestionBinding
+import com.aldidwiki.myquizapp.helper.MapKey
 import com.aldidwiki.myquizapp.helper.decodeHtml
 import com.aldidwiki.myquizapp.helper.show
 import com.google.android.material.button.MaterialButton
@@ -66,7 +67,7 @@ class QuestionFragment : Fragment() {
                 is ApiResponse.Loading -> binding.progressBar.show(true)
                 is ApiResponse.Error -> {
                     binding.progressBar.show(false)
-                    Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, resources.getString(R.string.error_message), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -90,8 +91,10 @@ class QuestionFragment : Fragment() {
 
     private fun MaterialButton.checkAnswer(correctAnswer: String) {
         this.setOnClickListener {
-            viewModel.questionFix = decodeHtml(binding.tvQuestion.text.toString())
-            viewModel.correctAnswerFix = correctAnswer
+            with(viewModel) {
+                insertQuestionParams[MapKey.QUESTION] = decodeHtml(binding.tvQuestion.text.toString())
+                insertQuestionParams[MapKey.CORRECT_ANSWER] = correctAnswer
+            }
 
             this.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
             if (this.text == correctAnswer) {

@@ -34,25 +34,28 @@ class GameFragment : Fragment() {
     private var toAchievement: NavDirections? = null
     private val args by navArgs<GameFragmentArgs>()
 
-    private var onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+    private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             binding.btnContinue.setOnClickListener {
                 binding.viewPager.setCurrentItem(position + 1, true)
-                viewModel.updateAnsweredCount(viewModel.isCorrect)
-                viewModel.insertTempQuestion()
+                with(viewModel) {
+                    updateAnsweredCount(isCorrect)
+                    insertTempQuestion()
+                }
             }
 
             viewModel.setHasAnswered(false)
-            if (position + 1 == Constant.QUESTION_COUNT) binding.btnContinue.text = "Finish"
+            if (position + 1 == Constant.QUESTION_COUNT)
+                binding.btnContinue.text = resources.getString(R.string.finish)
         }
     }
 
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             MaterialDialog(requireContext()).show {
-                title(text = "Confirmation")
-                message(text = "Time is still available, are you sure want to end the quiz?")
+                title(text = resources.getString(R.string.confirmation))
+                message(text = resources.getString(R.string.exit_confirmation))
                 positiveButton(text = "Yes") {
                     toAchievement?.let { findNavController().navigate(it) }
                             ?: findNavController().navigateUp()
@@ -101,11 +104,11 @@ class GameFragment : Fragment() {
         viewModel.eventTimeFinished.observe(viewLifecycleOwner) { hasFinished ->
             if (hasFinished)
                 MaterialDialog(requireContext()).show {
-                    title(text = "Time's Up!")
+                    title(text = resources.getString(R.string.time_up))
                     cancelable(false)
                     cancelOnTouchOutside(false)
                     icon(R.drawable.ic_access_alarms)
-                    message(text = "You running out time, you can retake the quiz")
+                    message(text = resources.getString(R.string.time_up_information))
                     positiveButton(text = "Continue") {
                         toAchievement?.let { findNavController().navigate(it) }
                                 ?: findNavController().navigateUp()

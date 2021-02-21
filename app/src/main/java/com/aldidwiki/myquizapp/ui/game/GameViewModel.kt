@@ -8,6 +8,7 @@ import com.aldidwiki.myquizapp.data.model.QuestionParameter
 import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
 import com.aldidwiki.myquizapp.data.source.local.entity.UserEntity
 import com.aldidwiki.myquizapp.helper.Constant
+import com.aldidwiki.myquizapp.helper.MapKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,27 +29,26 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
 
     /*this is to save the answered question to temp database, the database will be cleared
     * every time user start the quiz for the first time*/
-    var questionFix = ""
-    var correctAnswerFix = ""
+    val insertQuestionParams = mutableMapOf<MapKey, String>()
     fun insertTempQuestion() {
         viewModelScope.launch {
             appRepository.insertQuestion(QuestionEntity(
-                    question = questionFix,
-                    correctAnswer = correctAnswerFix,
+                    question = insertQuestionParams[MapKey.QUESTION] ?: "",
+                    correctAnswer = insertQuestionParams[MapKey.CORRECT_ANSWER] ?: "",
                     isCorrect = isCorrect
             ))
         }
     }
 
     /*this is to observe the score, answered count, etc for achievement fragment*/
-    private val result = mutableMapOf<String, Int>()
+    private val result = mutableMapOf<MapKey, Int>()
     private val _user = MediatorLiveData<UserEntity>()
     val user: LiveData<UserEntity> get() = _user
     private fun initUser() {
-        _user.addSource(answeredCount) { totalAnswered -> result["total_answered"] = totalAnswered }
-        _user.addSource(totalScore) { totalScore -> result["total_score"] = totalScore }
-        _user.addSource(correctAnswer) { totalCorrect -> result["total_correct"] = totalCorrect }
-        _user.addSource(incorrectAnswer) { totalIncorrect -> result["total_incorrect"] = totalIncorrect }
+        _user.addSource(answeredCount) { totalAnswered -> result[MapKey.TOTAL_ANSWERED] = totalAnswered }
+        _user.addSource(totalScore) { totalScore -> result[MapKey.TOTAL_SCORE] = totalScore }
+        _user.addSource(correctAnswer) { totalCorrect -> result[MapKey.TOTAL_CORRECT] = totalCorrect }
+        _user.addSource(incorrectAnswer) { totalIncorrect -> result[MapKey.TOTAL_INCORRECT] = totalIncorrect }
     }
 
     /*this is use to count the total question has already answered*/
@@ -61,17 +61,17 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         _user.value = UserEntity(
                 id = 0,
                 name = userName,
-                totalAnswered = result["total_answered"] ?: 0,
-                totalScore = result["total_score"] ?: 0,
-                totalCorrect = result["total_correct"] ?: 0,
-                totalIncorrect = result["total_incorrect"] ?: 0
+                totalAnswered = result[MapKey.TOTAL_ANSWERED] ?: 0,
+                totalScore = result[MapKey.TOTAL_SCORE] ?: 0,
+                totalCorrect = result[MapKey.TOTAL_CORRECT] ?: 0,
+                totalIncorrect = result[MapKey.TOTAL_INCORRECT] ?: 0
         )
     }
 
     /*this is to manage state whether app is on last question or not*/
     val onLastQuestion = Transformations.map(answeredCount) { it == Constant.QUESTION_COUNT }
 
-    /*this is to manage the next button state whether user already answer or not*/
+    /*this is to manage the next button state whether user already answered or not*/
     private val _hasAnswered = MutableLiveData(false)
     val hasAnswered: LiveData<Boolean> get() = _hasAnswered
     fun setHasAnswered(hasAnswered: Boolean) {
