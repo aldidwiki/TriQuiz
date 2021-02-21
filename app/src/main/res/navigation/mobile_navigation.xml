@@ -54,19 +54,11 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/preGameFragment" />
         <argument
-            android:name="sessionToken"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
             android:name="userName"
             app:argType="string" />
         <argument
-            android:name="categoryId"
-            app:argType="integer" />
-        <argument
-            android:name="difficulties"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="questionParams"
+            app:argType="com.aldidwiki.myquizapp.data.model.QuestionParameter" />
     </fragment>
     <fragment
         android:id="@+id/achievementFragment"

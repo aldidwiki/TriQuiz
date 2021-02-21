@@ -91,11 +91,8 @@ class GameFragment : Fragment() {
     }
 
     private fun subscribeData() {
-        val token = args.sessionToken as String
         viewModel.userName = args.userName
-        viewModel.setToken(token)
-        viewModel.setCategoryId(args.categoryId)
-        viewModel.setDifficulty(args.difficulties)
+        viewModel.setQuestionParams(args.questionParams)
 
         viewModel.user.observe(viewLifecycleOwner) {
             toAchievement = GameFragmentDirections.actionGameFragmentToAchievementFragment(it)

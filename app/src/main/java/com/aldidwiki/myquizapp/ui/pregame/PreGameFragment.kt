@@ -17,10 +17,12 @@ import androidx.navigation.fragment.navArgs
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItems
+import com.aldidwiki.myquizapp.data.model.QuestionParameter
 import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.databinding.FragmentPreGameBinding
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class PreGameFragment : Fragment() {
@@ -62,7 +64,7 @@ class PreGameFragment : Fragment() {
                 listItems(items = listMenu) { _, _, text ->
                     val difficultiesText = "Difficulties : $text"
                     binding.btnChangeDifficulties.text = difficultiesText
-                    difficulties = text.toString().toLowerCase()
+                    difficulties = text.toString().toLowerCase(Locale.ROOT)
                 }
                 lifecycleOwner(viewLifecycleOwner)
             }
@@ -75,12 +77,16 @@ class PreGameFragment : Fragment() {
                     viewModel.getToken().observe(viewLifecycleOwner) { state ->
                         when (state) {
                             is ApiResponse.Success -> {
+                                val questionParams = QuestionParameter(
+                                        token = state.body?.token!!,
+                                        categoryId = args.categoryItem.id,
+                                        difficulty = difficulties
+                                )
+
                                 val toGame = PreGameFragmentDirections
                                         .actionPreGameFragmentToGameFragment(
-                                                state.body?.token,
                                                 edtName.text.toString().trimStart(),
-                                                args.categoryItem.id,
-                                                difficulties
+                                                questionParams
                                         )
                                 findNavController().navigate(toGame)
                             }

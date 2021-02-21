@@ -4,6 +4,7 @@ import android.os.CountDownTimer
 import android.text.format.DateUtils
 import androidx.lifecycle.*
 import com.aldidwiki.myquizapp.data.AppRepository
+import com.aldidwiki.myquizapp.data.model.QuestionParameter
 import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
 import com.aldidwiki.myquizapp.data.source.local.entity.UserEntity
 import com.aldidwiki.myquizapp.helper.Constant
@@ -13,29 +14,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(private val appRepository: AppRepository) : ViewModel() {
-    /*this is to set token that used to retrieve the question from api*/
-    private val token = MutableLiveData<String>()
     var userName = ""
-    fun setToken(token: String) {
-        this.token.value = token
+
+    /*this is use to input api getQuestions params*/
+    private val questionParams = MutableLiveData<QuestionParameter>()
+    fun setQuestionParams(questionParameter: QuestionParameter) {
+        this.questionParams.value = questionParameter
     }
 
-    private val categoryId = MutableLiveData<Int>()
-    fun setCategoryId(categoryId: Int) {
-        this.categoryId.value = categoryId
-    }
-
-    private val difficulty = MutableLiveData<String?>()
-    fun setDifficulty(difficulty: String?) {
-        this.difficulty.value = difficulty
-    }
-
-    fun getQuestions() = token.switchMap { token ->
-        categoryId.switchMap { categoryId ->
-            difficulty.switchMap { difficulty ->
-                appRepository.getQuestions(token, categoryId, difficulty).asLiveData()
-            }
-        }
+    fun getQuestions() = questionParams.switchMap {
+        appRepository.getQuestions(it.token, it.categoryId, it.difficulty).asLiveData()
     }
 
     /*this is to save the answered question to temp database, the database will be cleared
