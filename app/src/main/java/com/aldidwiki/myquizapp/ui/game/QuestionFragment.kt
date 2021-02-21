@@ -14,7 +14,6 @@ import com.aldidwiki.myquizapp.data.source.remote.ApiResponse
 import com.aldidwiki.myquizapp.databinding.FragmentQuestionBinding
 import com.aldidwiki.myquizapp.helper.MapKey
 import com.aldidwiki.myquizapp.helper.decodeHtml
-import com.aldidwiki.myquizapp.helper.show
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,7 +54,7 @@ class QuestionFragment : Fragment() {
         viewModel.getQuestions().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is ApiResponse.Success -> {
-                    binding.progressBar.show(false)
+                    binding.skeleton.showOriginal()
                     val questions = state.body
                     questions.map {
                         binding.questionData = it
@@ -64,11 +63,9 @@ class QuestionFragment : Fragment() {
                         setChoiceAnswer(choice, it.correctAnswer)
                     }
                 }
-                is ApiResponse.Loading -> binding.progressBar.show(true)
-                is ApiResponse.Error -> {
-                    binding.progressBar.show(false)
+                is ApiResponse.Loading -> binding.skeleton.showSkeleton()
+                is ApiResponse.Error ->
                     Toast.makeText(activity, resources.getString(R.string.error_message), Toast.LENGTH_SHORT).show()
-                }
             }
         }
     }

@@ -15,8 +15,6 @@ interface AppDataSource {
 
     fun getTempResults(): Flow<List<QuestionEntity>>
 
-    fun getUser(): Flow<UserEntity>
-
     fun getToken(): Flow<ApiResponse<TokenResponse?>>
 
     suspend fun insertQuestion(question: QuestionEntity)

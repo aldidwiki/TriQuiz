@@ -46,7 +46,7 @@ class AppRepository @Inject constructor(
             Timber.e(e)
             emit(ApiResponse.Error(e.message.toString()))
         }
-    }.flowOn(IO)
+    }.flowOn(IO).distinctUntilChanged()
 
     override fun getToken(): Flow<ApiResponse<TokenResponse?>> = flow {
         emit(ApiResponse.Loading)
@@ -71,10 +71,6 @@ class AppRepository @Inject constructor(
 
     override fun getTempResults(): Flow<List<QuestionEntity>> {
         return localService.getTempQuestion()
-    }
-
-    override fun getUser(): Flow<UserEntity> {
-        return localService.getUser()
     }
 
     override suspend fun insertUser(user: UserEntity) {

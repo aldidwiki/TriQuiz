@@ -10,71 +10,69 @@
             type="com.aldidwiki.myquizapp.data.source.remote.entity.QuestionItems" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeleton"
+        style="@style/MySkeleton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="32dp"
-        android:paddingVertical="16dp"
-        tools:context=".ui.game.QuestionFragment">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_question"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:textColor="?colorOnBackground"
-            android:textSize="20sp"
-            app:html_decode="@{questionData.question}"
-            app:layout_constraintBottom_toTopOf="@id/btn_a"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="What airline was the owner of the plane that crashed off the coast of Nova Scotia in 1998?" />
+            android:layout_height="match_parent"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="16dp"
+            tools:context=".ui.game.QuestionFragment">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_a"
-            style="@style/MyChoiceButton"
-            app:layout_constraintBottom_toTopOf="@id/btn_b"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_question"
-            tools:text="A flavor of Ben and Jerry&#039;s ice-cream" />
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:textColor="?colorOnBackground"
+                android:textSize="20sp"
+                app:html_decode="@{questionData.question}"
+                app:layout_constraintBottom_toTopOf="@id/btn_a"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="What airline was the owner of the plane that crashed off the coast of Nova Scotia in 1998?" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_b"
-            style="@style/MyChoiceButton"
-            app:layout_constraintBottom_toTopOf="@id/btn_c"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_a"
-            tools:text=" Psychological Disorder" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_a"
+                style="@style/MyChoiceButton"
+                app:layout_constraintBottom_toTopOf="@id/btn_b"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_question"
+                tools:text="A flavor of Ben and Jerry&#039;s ice-cream" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_c"
-            style="@style/MyChoiceButton"
-            app:layout_constraintBottom_toTopOf="@id/btn_d"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_b"
-            tools:text="An Australian State" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_b"
+                style="@style/MyChoiceButton"
+                app:layout_constraintBottom_toTopOf="@id/btn_c"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_a"
+                tools:text=" Psychological Disorder" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_d"
-            style="@style/MyChoiceButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_c"
-            tools:text="The Name of a Warner Brothers Cartoon Character" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_c"
+                style="@style/MyChoiceButton"
+                app:layout_constraintBottom_toTopOf="@id/btn_d"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_b"
+                tools:text="An Australian State" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_d"
+                style="@style/MyChoiceButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_c"
+                tools:text="The Name of a Warner Brothers Cartoon Character" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
 </layout>

@@ -28,4 +28,9 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingTop">10dp</item>
     </style>
+
+    <style name="MySkeleton">
+        <item name="shimmerDurationInMillis">1000</item>
+        <item name="maskColor">@color/maskColor</item>
+    </style>
 </resources>

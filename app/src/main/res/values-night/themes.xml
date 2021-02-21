@@ -29,4 +29,9 @@
         <item name="android:paddingTop">10dp</item>
         <item name="android:textColor">@color/primaryColor</item>
     </style>
+
+    <style name="MySkeleton">
+        <item name="shimmerDurationInMillis">1000</item>
+        <item name="maskColor">@color/maskColorDark</item>
+    </style>
 </resources>
