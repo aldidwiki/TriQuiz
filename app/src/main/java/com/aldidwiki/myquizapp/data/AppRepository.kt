@@ -34,10 +34,11 @@ class AppRepository @Inject constructor(
         }
     }.flowOn(IO).distinctUntilChanged()
 
-    override fun getQuestions(token: String, categoryId: Int): Flow<ApiResponse<List<QuestionItems>>> = flow {
+    override fun getQuestions(token: String, categoryId: Int, difficulty: String?)
+            : Flow<ApiResponse<List<QuestionItems>>> = flow {
         emit(ApiResponse.Loading)
         try {
-            val response = remoteService.getQuestions(token, categoryId)
+            val response = remoteService.getQuestions(token, categoryId, difficulty)
             if (response.isSuccessful) response.body()?.let {
                 emit(ApiResponse.Success(it.results))
             } else emit(ApiResponse.Error(response.errorBody().toString()))

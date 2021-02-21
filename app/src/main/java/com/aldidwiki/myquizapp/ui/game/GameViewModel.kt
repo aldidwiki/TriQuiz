@@ -25,8 +25,17 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
         this.categoryId.value = categoryId
     }
 
+    private val difficulty = MutableLiveData<String?>()
+    fun setDifficulty(difficulty: String?) {
+        this.difficulty.value = difficulty
+    }
+
     fun getQuestions() = token.switchMap { token ->
-        categoryId.switchMap { categoryId -> appRepository.getQuestions(token, categoryId).asLiveData() }
+        categoryId.switchMap { categoryId ->
+            difficulty.switchMap { difficulty ->
+                appRepository.getQuestions(token, categoryId, difficulty).asLiveData()
+            }
+        }
     }
 
     /*this is to save the answered question to temp database, the database will be cleared

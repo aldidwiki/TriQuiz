@@ -52,14 +52,17 @@ class PreGameFragment : Fragment() {
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         activity.supportActionBar?.title = args.categoryItem.name
 
+        var difficulties: String? = null
+
         binding.edtName.requestFocus()
         binding.btnChangeDifficulties.setOnClickListener {
             val listMenu = listOf("Easy", "Medium", "Hard")
             MaterialDialog(requireContext()).show {
                 title(text = "Choose Difficulties")
                 listItems(items = listMenu) { _, _, text ->
-                    val difficulties = "Difficulties : $text"
-                    binding.btnChangeDifficulties.text = difficulties
+                    val difficultiesText = "Difficulties : $text"
+                    binding.btnChangeDifficulties.text = difficultiesText
+                    difficulties = text.toString().toLowerCase()
                 }
                 lifecycleOwner(viewLifecycleOwner)
             }
@@ -76,7 +79,8 @@ class PreGameFragment : Fragment() {
                                         .actionPreGameFragmentToGameFragment(
                                                 state.body?.token,
                                                 edtName.text.toString().trimStart(),
-                                                args.categoryItem.id
+                                                args.categoryItem.id,
+                                                difficulties
                                         )
                                 findNavController().navigate(toGame)
                             }

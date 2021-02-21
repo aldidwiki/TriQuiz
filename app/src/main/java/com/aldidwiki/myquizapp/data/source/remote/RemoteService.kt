@@ -11,9 +11,10 @@ interface RemoteService {
     @GET("api_category.php")
     suspend fun getCategories(): Response<CategoryResponse>
 
-    @GET("api.php?amount=1&difficulty=easy&type=multiple")
+    @GET("api.php?amount=1&type=multiple")
     suspend fun getQuestions(@Query("token") token: String,
-                             @Query("category") categoryId: Int): Response<QuestionResponse>
+                             @Query("category") categoryId: Int,
+                             @Query("difficulty") difficulty: String?): Response<QuestionResponse>
 
     @GET("api_token.php")
     suspend fun getToken(@Query("command") command: String): Response<TokenResponse>

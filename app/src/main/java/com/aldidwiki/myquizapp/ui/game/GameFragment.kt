@@ -95,6 +95,7 @@ class GameFragment : Fragment() {
         viewModel.userName = args.userName
         viewModel.setToken(token)
         viewModel.setCategoryId(args.categoryId)
+        viewModel.setDifficulty(args.difficulties)
 
         viewModel.user.observe(viewLifecycleOwner) {
             toAchievement = GameFragmentDirections.actionGameFragmentToAchievementFragment(it)
