@@ -13,6 +13,9 @@ interface LocalService {
     @Query("SELECT * FROM question_entity")
     fun getTempQuestion(): Flow<List<QuestionEntity>>
 
+    @Query("SELECT * FROM user_entity ORDER BY totalScore DESC")
+    fun getUsers(): Flow<List<UserEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertQuestion(question: QuestionEntity)
 

@@ -76,4 +76,8 @@ class AppRepository @Inject constructor(
     override suspend fun insertUser(user: UserEntity) {
         localService.insertUser(user)
     }
+
+    override fun getUsers(): Flow<List<UserEntity>> {
+        return localService.getUsers()
+    }
 }

@@ -20,10 +20,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_stats"
-        android:name="com.aldidwiki.myquizapp.ui.stats.StatsFragment"
-        android:label="@string/title_stats"
-        tools:layout="@layout/fragment_stats" />
+        android:id="@+id/navigation_leaderboard"
+        android:name="com.aldidwiki.myquizapp.ui.leaderboard.LeaderBoardFragment"
+        android:label="@string/title_leaderboard"
+        tools:layout="@layout/fragment_leaderboard" />
     <fragment
         android:id="@+id/preGameFragment"
         android:name="com.aldidwiki.myquizapp.ui.pregame.PreGameFragment"
