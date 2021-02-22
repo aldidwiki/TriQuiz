@@ -1,4 +1,4 @@
-package com.aldidwiki.myquizapp.ui.dashboard
+package com.aldidwiki.myquizapp.ui.stats
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.aldidwiki.myquizapp.databinding.FragmentDashboardBinding
+import com.aldidwiki.myquizapp.databinding.FragmentStatsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardFragment : Fragment() {
-    private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var _binding: FragmentDashboardBinding? = null
+class StatsFragment : Fragment() {
+    private val statsViewModel: StatsViewModel by viewModels()
+    private var _binding: FragmentStatsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentStatsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -28,7 +28,7 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dashboardViewModel.text.observe(viewLifecycleOwner, {
+        statsViewModel.text.observe(viewLifecycleOwner, {
             binding.textDashboard.text = it
         })
     }

@@ -1,4 +1,4 @@
-package com.aldidwiki.myquizapp.ui.dashboard
+package com.aldidwiki.myquizapp.ui.stats
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor() : ViewModel() {
+class StatsViewModel @Inject constructor() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"

@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
                 supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_home, R.id.navigation_dashboard))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_home, R.id.navigation_stats))
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.label) {
                 resources.getString(R.string.title_home) -> binding.navView.show(true)
-                resources.getString(R.string.title_dashboard) -> binding.navView.show(true)
+                resources.getString(R.string.title_stats) -> binding.navView.show(true)
                 else -> binding.navView.show(false)
             }
         }
