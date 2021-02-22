@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyQuizApp</string>
+    <string name="app_name">TriQuiz</string>
     <string name="title_home">Home</string>
     <string name="title_leaderboard">Leaderboard</string>
     <string name="name">Name</string>

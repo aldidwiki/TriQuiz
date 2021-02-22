@@ -5,11 +5,11 @@
 
     <color name="primaryColor">#FF5722</color>
     <color name="primaryVariantColor">#E64A19</color>
-    <color name="secondaryColor">#4CAF50</color>
-    <color name="secondaryVariantColor">#388E3C</color>
+    <color name="secondaryColor">#FF9800</color>
+    <color name="secondaryVariantColor">#EF6C00</color>
 
     <color name="correctAnswerColor">#2E7D32</color>
-    <color name="wrongAnswerColor">#C62828</color>
+    <color name="wrongAnswerColor">#D50000</color>
 
     <color name="maskColor">#E0E0E0</color>
     <color name="maskColorDark">#2a2a2a</color>
