@@ -94,10 +94,10 @@ class GameViewModel @Inject constructor(private val appRepository: AppRepository
     val incorrectAnswer: LiveData<Int> get() = _incorrectAnswer
     private fun updateScore(isCorrect: Boolean) {
         if (isCorrect) {
-            _totalScore.value = _totalScore.value?.plus(20)
+            _totalScore.value = _totalScore.value?.plus(Constant.CORRECT_POINT)
             _correctAnswer.value = _correctAnswer.value?.plus(1)
         } else {
-            _totalScore.value = 0.coerceAtLeast(_totalScore.value?.minus(10)!!)
+            _totalScore.value = 0.coerceAtLeast(_totalScore.value?.minus(Constant.INCORRECT_POINT)!!)
             _incorrectAnswer.value = _incorrectAnswer.value?.plus(1)
         }
     }

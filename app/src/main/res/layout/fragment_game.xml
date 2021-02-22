@@ -37,64 +37,43 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_question"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:drawableStart="@drawable/ic__assignment"
-                    android:padding="5dp"
-                    android:text="@{`Answered : ` + Integer.toString(gameViewModel.answeredCount) + `/5`}"
-                    android:textColor="?colorOnBackground"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@id/tv_wrong_answers"
-                    app:layout_constraintStart_toEndOf="@id/tv_correct_answers"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/question_total" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:padding="5dp"
-                    android:text="@{`Score : ` + Integer.toString(gameViewModel.totalScore)}"
-                    android:textColor="?colorOnBackground"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_question"
-
-                    tools:text="@string/score" />
-
-                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_correct_answers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
+                    style="@style/MyGameAppbarText"
                     android:drawableStart="@drawable/ic_check_circle"
-                    android:padding="5dp"
                     android:text="@{`Correct : ` + Integer.toString(gameViewModel.correctAnswer)}"
-                    android:textColor="?colorOnBackground"
-                    android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@id/tv_question"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/correct" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_question"
+                    style="@style/MyGameAppbarText"
+                    android:drawableStart="@drawable/ic__assignment"
+                    android:text="@{`Answered : ` + Integer.toString(gameViewModel.answeredCount) + `/5`}"
+                    app:layout_constraintEnd_toStartOf="@id/tv_wrong_answers"
+                    app:layout_constraintStart_toEndOf="@id/tv_correct_answers"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/question_total" />
+
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_wrong_answers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
+                    style="@style/MyGameAppbarText"
                     android:drawableStart="@drawable/ic_wrong"
-                    android:padding="5dp"
                     android:text="@{`Wrong : ` + Integer.toString(gameViewModel.incorrectAnswer)}"
-                    android:textColor="?colorOnBackground"
-                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_question"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/wrong" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_score"
+                    style="@style/MyGameScoreText"
+                    android:text="@{`Score : ` + Integer.toString(gameViewModel.totalScore)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_question"
+                    tools:text="@string/score" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,17 +94,12 @@
 
         <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/btn_continue"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            style="@style/MyCircularProgressButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="32dp"
-            android:background="@drawable/rounded_border"
             android:enabled="@{gameViewModel.hasAnswered}"
-            android:text="@string/next"
-            android:textColor="@android:color/white"
-            app:spinning_bar_color="@android:color/white"
-            app:spinning_bar_padding="6dp"
-            app:spinning_bar_width="4dp" />
+            android:text="@string/next" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
