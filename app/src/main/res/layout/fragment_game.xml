@@ -8,6 +8,10 @@
         <variable
             name="gameViewModel"
             type="com.aldidwiki.myquizapp.ui.game.GameViewModel" />
+
+        <variable
+            name="constant"
+            type="com.aldidwiki.myquizapp.helper.Constant" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -50,7 +54,7 @@
                     android:id="@+id/tv_question"
                     style="@style/MyGameAppbarText"
                     android:drawableStart="@drawable/ic__assignment"
-                    android:text="@{`Answered : ` + Integer.toString(gameViewModel.answeredCount) + `/5`}"
+                    android:text="@{`Answered : ` + Integer.toString(gameViewModel.answeredCount) + `/` + Integer.toString(constant.QUESTION_COUNT)}"
                     app:layout_constraintEnd_toStartOf="@id/tv_wrong_answers"
                     app:layout_constraintStart_toEndOf="@id/tv_correct_answers"
                     app:layout_constraintTop_toTopOf="parent"
