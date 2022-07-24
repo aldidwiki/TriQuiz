@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldidwiki.myquizapp.adapter.LeaderBoardAdapter
 import com.aldidwiki.myquizapp.databinding.FragmentLeaderboardBinding
+import com.aldidwiki.myquizapp.helper.show
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -43,11 +44,22 @@ class LeaderBoardFragment : Fragment() {
 
         subscribeData()
         initRecyclerView()
+        setupListener()
+    }
+
+    private fun setupListener() {
+        binding.btnClear.setOnClickListener {
+            viewModel.clearLeaderboards()
+        }
     }
 
     private fun subscribeData() {
         viewModel.getUsers().observe(viewLifecycleOwner) {
             leaderBoardAdapter.submitList(it)
+            binding.btnClear.show(it.isNotEmpty())
+            binding.appBar.show(it.isNotEmpty())
+            binding.llLeaderboard.show(it.isNotEmpty())
+            binding.tvNoLeaderboards.show(it.isEmpty())
         }
     }
 

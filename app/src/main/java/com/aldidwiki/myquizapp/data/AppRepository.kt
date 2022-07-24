@@ -80,4 +80,8 @@ class AppRepository @Inject constructor(
     override fun getUsers(): Flow<List<UserEntity>> {
         return localService.getUsers()
     }
+
+    override suspend fun clearLeaderBoards() {
+        localService.clearLeaderBoards()
+    }
 }

@@ -24,4 +24,7 @@ interface LocalService {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserEntity)
+
+    @Query("DELETE FROM user_entity")
+    suspend fun clearLeaderBoards()
 }

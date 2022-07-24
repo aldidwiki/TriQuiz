@@ -29,4 +29,6 @@
         <item>Hard</item>
     </string-array>
     <string name="difficulties_text">Difficulty : %s</string>
+    <string name="clear_leaderboards">Clear Leaderboards</string>
+    <string name="no_leaderboards">No Leaderboards</string>
 </resources>

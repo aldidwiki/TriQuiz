@@ -24,4 +24,6 @@ interface AppDataSource {
     suspend fun clearQuestionEntity()
 
     suspend fun insertUser(user: UserEntity)
+
+    suspend fun clearLeaderBoards()
 }
