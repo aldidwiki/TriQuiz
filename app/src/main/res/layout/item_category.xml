@@ -7,14 +7,14 @@
 
         <variable
             name="categoryData"
-            type="com.aldidwiki.myquizapp.data.source.remote.entity.TriviaCategoriesItem" />
+            type="com.aldidwiki.myquizapp.domain.model.CategoryDomainModel" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/secondaryColor"
+        app:cardBackgroundColor="@{categoryData.categoryBgColor}"
         app:cardCornerRadius="8dp"
         app:cardElevation="6dp">
 
@@ -25,7 +25,7 @@
             android:background="#8888"
             android:gravity="center"
             android:padding="16dp"
-            android:text="@{categoryData.name}"
+            android:text="@{categoryData.categoryName}"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             tools:text="General Knowledge" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.aldidwiki.myquizapp.ui.home.HomeFragment"
+        android:name="com.aldidwiki.myquizapp.presentation.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -21,12 +21,12 @@
 
     <fragment
         android:id="@+id/navigation_leaderboard"
-        android:name="com.aldidwiki.myquizapp.ui.leaderboard.LeaderBoardFragment"
+        android:name="com.aldidwiki.myquizapp.presentation.ui.leaderboard.LeaderBoardFragment"
         android:label="@string/title_leaderboard"
         tools:layout="@layout/fragment_leaderboard" />
     <fragment
         android:id="@+id/preGameFragment"
-        android:name="com.aldidwiki.myquizapp.ui.pregame.PreGameFragment"
+        android:name="com.aldidwiki.myquizapp.presentation.ui.pregame.PreGameFragment"
         android:label="Pre Game"
         tools:layout="@layout/fragment_pre_game">
         <action
@@ -38,11 +38,11 @@
             app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="categoryItem"
-            app:argType="com.aldidwiki.myquizapp.data.source.remote.entity.TriviaCategoriesItem" />
+            app:argType="com.aldidwiki.myquizapp.domain.model.CategoryDomainModel" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
-        android:name="com.aldidwiki.myquizapp.ui.game.GameFragment"
+        android:name="com.aldidwiki.myquizapp.presentation.ui.game.GameFragment"
         android:label="Game"
         tools:layout="@layout/fragment_game">
         <action
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/achievementFragment"
-        android:name="com.aldidwiki.myquizapp.ui.achievement.AchievementFragment"
+        android:name="com.aldidwiki.myquizapp.presentation.ui.achievement.AchievementFragment"
         android:label="Achievement"
         tools:layout="@layout/fragment_achievement">
         <action
@@ -73,7 +73,7 @@
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true" />
         <argument
-            android:name="userEntity"
-            app:argType="com.aldidwiki.myquizapp.data.source.local.entity.UserEntity" />
+            android:name="userDomainModel"
+            app:argType="com.aldidwiki.myquizapp.domain.model.UserDomainModel" />
     </fragment>
 </navigation>

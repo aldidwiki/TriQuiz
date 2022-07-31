@@ -11,7 +11,7 @@
 
         <variable
             name="result"
-            type="com.aldidwiki.myquizapp.data.source.local.entity.UserEntity" />
+            type="com.aldidwiki.myquizapp.domain.model.UserDomainModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,7 @@
 package com.aldidwiki.myquizapp.di
 
 import com.aldidwiki.myquizapp.BuildConfig
-import com.aldidwiki.myquizapp.data.source.remote.RemoteService
+import com.aldidwiki.myquizapp.data.source.remote.network.RemoteService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

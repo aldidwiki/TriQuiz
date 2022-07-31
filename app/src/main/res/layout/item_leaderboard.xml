@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
+            name="itemPosition"
+            type="Integer" />
+
+        <variable
             name="user"
-            type="com.aldidwiki.myquizapp.data.source.local.entity.UserEntity" />
+            type="com.aldidwiki.myquizapp.domain.model.UserDomainModel" />
     </data>
 
     <LinearLayout
@@ -24,6 +29,7 @@
             android:layout_weight="0.1"
             android:gravity="center"
             android:textSize="18sp"
+            app:userPosition="@{itemPosition}"
             tools:text="1." />
 
         <TextView

@@ -7,7 +7,7 @@
 
         <variable
             name="gameViewModel"
-            type="com.aldidwiki.myquizapp.ui.game.GameViewModel" />
+            type="com.aldidwiki.myquizapp.presentation.ui.game.GameViewModel" />
 
         <variable
             name="constant"
@@ -17,7 +17,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.game.GameFragment">
+        tools:context=".presentation.ui.game.GameFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

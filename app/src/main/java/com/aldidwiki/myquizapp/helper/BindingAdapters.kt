@@ -16,3 +16,8 @@ fun isCorrect(textView: TextView, isCorrect: Boolean) {
         textView.setTextColor(ContextCompat.getColor(textView.context, R.color.correctAnswerColor))
     else textView.setTextColor(ContextCompat.getColor(textView.context, R.color.wrongAnswerColor))
 }
+
+@BindingAdapter("app:userPosition")
+fun TextView.setUserRank(userPosition: Int) {
+    text = (userPosition + 1).toString()
+}

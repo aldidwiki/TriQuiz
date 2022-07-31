@@ -2,9 +2,9 @@ package com.aldidwiki.myquizapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.aldidwiki.myquizapp.data.source.local.LocalDatabase
-import com.aldidwiki.myquizapp.data.source.local.LocalDatabase.Companion.DB_NAME
-import com.aldidwiki.myquizapp.data.source.local.LocalService
+import com.aldidwiki.myquizapp.data.source.local.database.LocalDatabase
+import com.aldidwiki.myquizapp.data.source.local.database.LocalDatabase.Companion.DB_NAME
+import com.aldidwiki.myquizapp.data.source.local.database.LocalService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

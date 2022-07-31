@@ -7,7 +7,7 @@
 
         <variable
             name="tempData"
-            type="com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity" />
+            type="com.aldidwiki.myquizapp.domain.model.QuestionDomainModel" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -1,19 +1,19 @@
-package com.aldidwiki.myquizapp.data.source.local.entity
+package com.aldidwiki.myquizapp.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.aldidwiki.myquizapp.domain.model.UserDomainModel
+import android.os.Parcelable
+import com.aldidwiki.myquizapp.data.source.local.entity.UserEntity
+import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "user_entity")
-data class UserEntity(
-        @PrimaryKey(autoGenerate = true) val id: Int,
+@Parcelize
+data class UserDomainModel(
+        val id: Int,
         val name: String,
         val totalAnswered: Int,
         val totalScore: Int,
         val totalCorrect: Int,
         val totalIncorrect: Int
-) {
-    fun toDomainModel() = UserDomainModel(
+) : Parcelable {
+    fun toEntity() = UserEntity(
             id = id,
             name = name,
             totalAnswered = totalAnswered,
