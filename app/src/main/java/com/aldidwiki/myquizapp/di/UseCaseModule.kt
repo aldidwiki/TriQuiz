@@ -1,7 +1,7 @@
 package com.aldidwiki.myquizapp.di
 
 import com.aldidwiki.myquizapp.domain.usecase.AppUseCase
-import com.aldidwiki.myquizapp.domain.usecase.AppUseCaseImpl
+import com.aldidwiki.myquizapp.domain.usecase.AppInteractor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,5 +13,5 @@ import dagger.hilt.android.scopes.ViewModelScoped
 abstract class UseCaseModule {
     @ViewModelScoped
     @Binds
-    abstract fun bindAppUseCase(appUseCaseImpl: AppUseCaseImpl): AppUseCase
+    abstract fun bindAppUseCase(appInteractor: AppInteractor): AppUseCase
 }

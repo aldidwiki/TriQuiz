@@ -1,7 +1,5 @@
 package com.aldidwiki.myquizapp.domain.usecase
 
-import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
-import com.aldidwiki.myquizapp.data.source.local.entity.UserEntity
 import com.aldidwiki.myquizapp.data.source.remote.network.ApiResponse
 import com.aldidwiki.myquizapp.data.source.remote.response.QuestionItems
 import com.aldidwiki.myquizapp.data.source.remote.response.TokenResponse
@@ -21,11 +19,11 @@ interface AppUseCase {
 
     fun getUsers(): Flow<List<UserDomainModel>>
 
-    suspend fun insertQuestion(question: QuestionEntity)
+    suspend fun insertQuestion(question: QuestionDomainModel)
 
     suspend fun clearQuestionEntity()
 
-    suspend fun insertUser(user: UserEntity)
+    suspend fun insertUser(user: UserDomainModel)
 
     suspend fun clearLeaderBoards()
 }

@@ -14,6 +14,6 @@ class AchievementViewModel @Inject constructor(private val appUseCase: AppUseCas
     val getTempResults = appUseCase.getTempResults().asLiveData()
 
     fun insertUser(userDomainModel: UserDomainModel) {
-        viewModelScope.launch { appUseCase.insertUser(userDomainModel.toEntity()) }
+        viewModelScope.launch { appUseCase.insertUser(userDomainModel) }
     }
 }

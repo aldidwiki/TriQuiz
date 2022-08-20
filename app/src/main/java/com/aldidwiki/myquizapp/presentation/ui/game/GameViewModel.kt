@@ -4,7 +4,7 @@ import android.os.CountDownTimer
 import android.text.format.DateUtils
 import androidx.lifecycle.*
 import com.aldidwiki.myquizapp.data.model.QuestionParameter
-import com.aldidwiki.myquizapp.data.source.local.entity.QuestionEntity
+import com.aldidwiki.myquizapp.domain.model.QuestionDomainModel
 import com.aldidwiki.myquizapp.domain.model.UserDomainModel
 import com.aldidwiki.myquizapp.domain.usecase.AppUseCase
 import com.aldidwiki.myquizapp.helper.Constant
@@ -32,7 +32,7 @@ class GameViewModel @Inject constructor(private val appUseCase: AppUseCase) : Vi
     val insertQuestionParams = mutableMapOf<MapKey, String>()
     fun insertTempQuestion() {
         viewModelScope.launch {
-            appUseCase.insertQuestion(QuestionEntity(
+            appUseCase.insertQuestion(QuestionDomainModel(
                     question = insertQuestionParams[MapKey.QUESTION] ?: "",
                     correctAnswer = insertQuestionParams[MapKey.CORRECT_ANSWER] ?: "",
                     isCorrect = isCorrect
